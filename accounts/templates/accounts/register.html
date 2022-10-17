@@ -1,0 +1,19 @@
+{% extends 'main.html' %}
+
+{% block title %}
+registration
+{% endblock title %}
+
+{% block content %}
+
+<form action="" method="POST" >
+    {% csrf_token %}
+
+    {% for field in form %}
+        <label> {{field.label}}</label>
+        {{field}}    
+    {% endfor %}
+
+    <button type="submit"> register </button>
+</form>
+{% endblock content %}
