@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}
+profile
+{% endblock title %}
+
+
+{% block content %}
+
+<img src="{{user.imageURL}}" >
+<br>
+<h3>{{user.username}}</h3>
+<br>
+<p>{{user.bio}}<p>
+<hr>
+<a href="{% url 'update_user' %}" > Edit Profile </a>
+<hr>
+<a href="{{request.META.HTTP_REFERER}}" > Back </a>
+
+{% endblock content %}

@@ -5,9 +5,7 @@ home
 {% endblock title %}
 
 {% block content %}
-<h1> Home </h1>
-<hr>
-<br>
+
 <ul>
     {% if request.user.is_authenticated %}
     <li><a href="{% url 'logout' %}" >Logout</a></li>
@@ -16,8 +14,7 @@ home
     
     <li> <a href="{% url 'register' %}" >Register</a></li>
     {% endif %}
-    <li> <a href="" ></a></li>
-    <li> <a href="" ></a></li>
-    <li> <a href="" ></a></li>
+    <li> <a href="{% url 'update_user' %}" > Edit Profile </a></li>
+    <li> <a href="{% url 'profile' request.user.id %}" > Profile </a></li>
 </ul>
 {% endblock content %}

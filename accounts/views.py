@@ -1,8 +1,9 @@
 from django.shortcuts import render , redirect
 from django.contrib import messages
 from django.contrib.auth import login , logout , authenticate
-from .forms import RegisterForm
+from .forms import RegisterForm , UpdateUserForm
 from .models import User
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 
@@ -37,11 +38,15 @@ def loginPage(request):
         
         try:
             user = User.objects.get(email=email)
+            
         except :
-            messages.error(request , 'User does not exist')
+            user = User.objects.get(username=email)
+            if user is None:
+                messages.error(request , 'User does not exist')
 
         try:
-            user = authenticate(request , email=User.objects.get(username=email) , password=password)
+            user_x = User.objects.get(username=email)
+            user = authenticate(request , email=user_x.email , password=password)
         except:
             user = authenticate(request , email=email , password=password)
             
@@ -68,3 +73,26 @@ def home(request):
     
     return render(request , 'accounts/home.html')
 
+
+@login_required(login_url='login')
+def profile(request , pk):
+    user = User.objects.get(id=pk)
+    
+    context = {'user':user}
+    return render(request , 'accounts/profile.html' , context)
+
+
+@login_required(login_url='login')
+def updateProfile(request):
+    user = request.user 
+    form = UpdateUserForm(instance=user)
+    
+    if request.method == 'POST':
+        form = UpdateUserForm(request.POST , request.FILES , instance=user)
+        
+        if form.is_valid():
+            form.save()
+            return redirect('profile' , pk=user.id)
+    
+    context = {'form':form}
+    return render(request , 'accounts/update_user.html' , context)

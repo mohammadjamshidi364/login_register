@@ -15,5 +15,7 @@ registration
     {% endfor %}
 
     <button type="submit"> register </button>
+    <a href="{{request.META.HTTP_REFERER}}" > Back </a>
+    <p><a href="{% url 'login' %}" > Already login ? </a></p>
 </form>
 {% endblock content %}
