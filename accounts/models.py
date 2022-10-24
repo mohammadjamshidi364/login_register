@@ -21,31 +21,3 @@ class User(AbstractUser):
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
-
-# class Profile(models.Model):
-#     user = models.ForeignKey(User , on_delete=models.CASCADE)
-#     avatar = models.ImageField(upload_to='profile')
-#     bio = models.TextField()
-
-#     def __str__(self):
-#         return self.user.username
-    
-#     @property
-#     def imageURL(self):
-#         try:
-#             url = self.avatar.url
-#         except:
-#             url = ''
-#         return url
-    
-#     def save(self):
-#         super().save()
-        
-#         img = Image.open(self.avatar.path)
-        
-#         if img.height > 100 or img.width > 100 :
-#             new_img = (100 , 100)
-            
-#             img.thumbnail(new_img)
-            
-#             img.save(self.avatar.path)
