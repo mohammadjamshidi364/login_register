@@ -10,6 +10,9 @@ from django.http import HttpResponse
 def registerPage(request):
     form = RegisterForm()
     
+    if request.user.is_authenticated:
+        return redirect('home')
+    
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         
